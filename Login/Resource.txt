@@ -1,0 +1,122 @@
+***Settings***
+Library    SeleniumLibrary
+Resource    ../Login/Credentials.txt
+
+***Variables***
+${Browser}    Chrome
+${DELAY}    0
+${LOGIN URL}    https://app.mantreo.com/log/in
+${ERROR URL}    https://app.mantreo.com/log/in/url/
+${Mantreo_login_url}    https://app.mantreo.com/log/in
+${Default_Browser}    chrome
+${Email}    grazynatestow@gmail.com
+${Topic}    Topic
+${Text}    Text
+${Service}    Tlumaczenie
+${StartDate}    2019-09-28 22:30
+${BusinessName}    Grazyna
+${Characters}    80
+${Price}    30
+${InvalidEmail}    invalid_email
+${AnyValue}    anyvalue
+
+***Keywords***
+Open Browser to Login Page
+    Open Browser    ${LOGIN URL}    ${Browser}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Login Page Should Be Open    
+    
+Login Page should Be Open
+    ${title} =    Get Title    
+    Should Match    ${title}    Mantreo*
+    
+Go To Login Page
+    Go To    ${LOGIN URL}
+    Login Page should Be Open
+      
+Submit Credentials
+    Press Keys    None    ENTER
+    
+Input Username
+    [Arguments]    ${Username}
+    Input Text    id=login    ${Username}
+    
+Input Password Field
+    [Arguments]    ${Password}
+    Input Text    id=password    ${Password}
+    
+Input Company Name
+    [Arguments]    ${Company Name}
+    Input Text    id=companyname    ${Company Name}
+    
+Input Phone Number
+    [Arguments]    ${Phone number}
+    Click Element    id=phone
+    Press Keys    None    CONTROL+a
+    Press Keys    None    BACKSPACE
+    Press Keys    None    ${Phone number} 
+     
+LoginKW
+    Input Text    id=companyname    siula    
+    Input Text    id=login    Siulaaa
+    Input Password    id=password    siula
+    
+Go to Modify Price List
+    Go To    https://siula.mantreo.com/company/prices/
+    
+Begin the Project and Create a New Client    
+    Open Browser to Login Page
+    LoginKW
+    Press Keys    None    ENTER
+    Click Element    //a[contains(text(),'Projekty')]
+    Click Element    //button[contains(.,'Nowy projekt')]
+    Click Element    //button[contains(.,'Nowy klient')]
+    Wait Until Page Contains Element    //input[@name='businessname']    
+    Input Text    //input[@name='businessname']    Grazyna
+    Input Text    //input[@id='contactperson']    Grazyna
+    Click Element    id=quick-client-add-save 
+    Sleep    2
+    Wait Until Page Contains Element    //input[@id='client']
+  
+Modify Price List
+    Click Element    //button[@onclick="location.href='/company/prices/'"]    
+    Click Element    //button[contains(.,'Dodaj')]
+    Wait Until Element Is Visible    id=rate_service_id_chzn   
+    Click Element    id=rate_service_id_chzn     
+    Press Keys    None     ARROW_DOWN
+    Repeat Keyword    3    Press Keys    None     ARROW_DOWN
+    Press Keys    None    ENTER
+    Wait Until Element Is Visible    id=language_chzn    
+    Click Element    id=language_chzn 
+    Press Keys    None    ARROW_DOWN
+    Press Keys    None    ENTER
+    Click Element    id=language_chzn    
+    Press Keys    None    ARROW_DOWN
+    Press Keys    None    ENTER
+    Wait Until Element Is Visible    id=tolanguage_chzn    
+    Click Element    id=tolanguage_chzn  
+    Press Keys    None    ARROW_DOWN
+    Press Keys    None    ENTER
+    Click Element    id=tolanguage_chzn    
+    Press Keys    None    ARROW_DOWN 
+    Press Keys    None    ENTER
+    Click Element    id=bothways    
+    Click Element    id=perpage 
+    Input Text    id=perpage    10
+    Wait Until Element Is Visible    id=price1
+    Click Element    id=price1
+    Input Text    id=price1    30 
+    Click Element    id=currency1    
+    Press Keys    None    ARROW_DOWN
+    Press Keys    None    ENTER
+    Click Element    id=button-save  
+    
+Get QuickMail
+    Open Browser    https://10minutemail.com/10MinuteMail/index.html    chrome 
+    Wait Until Element Is Visible    id=mailAddress 
+    ${quickmail} =    Get Value    id=mailAddress       
+    Log    ${quickmail}   
+    Close Window  
+    [Return]    ${quickmail}
+
