@@ -3,7 +3,6 @@ Suite Teardown    Close Browser
 Resource    ../Login/Resource.txt
 Library    SeleniumLibrary
 
-
 *** Test Cases ***
 Creating Price list
     Open Browser to Login Page
