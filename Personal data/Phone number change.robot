@@ -24,13 +24,10 @@ Log in and Modify Personal Data
     Press Keys    None    ENTER
     Click Image    //img[@class='avatar']    
     Click Link    //a[text() = ' Moje dane'] 
-    
-    
-    
+      
 Data should not be approved
     Location Should Be    ${ERROR URL}
     
-
 Phone number with invalid data should not be approved  
     [Arguments]    ${Phone number}
     Input Phone Number    ${Phone number}
